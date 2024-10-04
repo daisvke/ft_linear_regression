@@ -1,65 +1,93 @@
+import sys
 import numpy as np
 import pandas as pd
-from price_prediction import estimate_price
+import argparse
+from price_prediction import estimate_price, read_thetas_from_file
 
-def train_model(thetaset_filename, data, learning_rate, iterations):
-    m = len(data)  # Number of observations
-    theta0 = 0.0
-    theta1 = 0.0
+def train_model(thetaset_filename, data, learning_rate):
+	m = len(data)  # Number of observations
+	try:
+		theta0, theta1 = read_thetas_from_file(thetaset_filename)
+	except Exception as e:
+		print(f"An unexpected error occurred: {e}")
+		sys.exit()
+	iterations = 1000
 
-    for _ in range(iterations):
-        # Calculate predictions
-        predictions = theta0 + (theta1 * data['km'])
-        
-        # Calculate the gradients
-        tmp_theta0 = learning_rate * (1/m) * np.sum(estimate_price(thetaset_filename, data['km']) - data['price'])
-        tmp_theta1 = learning_rate * (1/m) * np.sum((estimate_price(thetaset_filename, data['km'] - data['price']) * data['km'])
-        
-        # Update the parameters
-        theta0 -= tmp_theta0
-        theta1 -= tmp_theta1
+	# Extract km and price values from the data
+	km_values = np.array(data['km'], dtype=float)
+	price_values = np.array(data['price'], dtype=float)
 
-    return theta0, theta1
+	for _ in range(iterations):
+		error = 0
+
+		for i in range(m):
+			print(f"km: {km_values[i]}, price: {price_values[i]}")
+			# Calculate predictions
+			prediction = estimate_price(theta0, theta1, km_values[i])  # Assuming estimate_price takes km as input
+			error += prediction - price_values[i]  # Calculate the error
+			print(f"\033[31mPrediction: {prediction}, Actual Price: {price_values[i]}\033[0m")
+			print(f"\033[33mError: {error}\033[0m")
+
+		# Calculate the gradients
+		tmp_theta0 = learning_rate * (1/m) * error # Gradient for theta0
+		tmp_theta1 = learning_rate * (1/m) * error * km_values[i] # Gradient for theta1
+
+		# Update the parameters
+		theta0 -= tmp_theta0
+		theta1 -= tmp_theta1
+
+		print(f"\033[32mtheta0 = {theta0}, theta1 = {theta1}\033[0m")
+		print(f"TMP theta0 = {tmp_theta0}, theta1 = {tmp_theta1}")
+
+		if np.isnan(theta0) or np.isnan(theta1):
+			print("Theta0 or 1 is NaN!!")
+			sys.exit()
+	return theta0, theta1
 
 # Parse given arguments and get the thetaset filename
 def parse_args():
 	# Create the parser
-	parser = argparse.ArgumentParser(description="""This program will be
-	used to predict the price of a car for a given mileage. 
-	When you launch the program, it should prompt you for a mileage, and then
-	give you back the estimated price for that mileage. The program will use
-	the following hypothesis to predict the price:
-	estimateP rice(mileage) = θ0 + (θ1 ∗ mileage)""")
+	parser = argparse.ArgumentParser(description="""This program will be used to train
+	your model. It will read your dataset file and perform a linear regression on
+	the data. Once the linear regression has completed, theta0 and theta1 values will be
+	saved for use in the price prediction program.
+	It will be using the following formulas:
+	tmp_theta0 = learningRate * (1/m) * sum(i=0 to m-1) (estimatePrice(mileage[i]) - price[i])
+	tmp_theta1 = learningRate * (1/m) * sum(i=0 to m-1) (estimatePrice(mileage[i]) - price[i]) """)
 
-	# Add arguments. There must be one argumentdescription_text
-	parser.add_argument('args', metavar='f', type=str, nargs='+',
+	# Add arguments. There must be two arguments for filenames
+	parser.add_argument('thetaset_file', type=str, help='the name of the thetaset file to read')
+	parser.add_argument('dataset_file', type=str,
 						help='a string with the name of the data file to read')
 
 	# Parse the arguments
 	args = parser.parse_args()
 
-	# Access the first given argument
-	return args.args[0], args.args[1]
+	# Access the two given arguments
+	return args.thetaset_file, args.dataset_file
 
 def main():
 	# From the arguments, get the mileage to predict the price from
 	thetaset_filename, dataset_filename = parse_args()
 
-    # Load the dataset
-    data = pd.read_csv('data.csv')
+	# Load the dataset
+	data = pd.read_csv(dataset_filename)
+	# Describe data
+	print(data.describe())
 
-    # Set hyperparameters
-    learning_rate = 0.01
-    iterations = 1000
+	# Set hyperparameters
+	learning_rate = 0.01
 
-    # Train the model
-    theta0, theta1 = train_model(data, learning_rate, iterations)
+	# Train the model
+	theta0, theta1 = train_model(thetaset_filename, data, learning_rate)
 
-    # Save the parameters to a file
-    with open('thetas.txt', 'w') as f:
-        f.write(f"{theta0},{theta1}")
+	print(f"Updated parameters: theta0 = {theta0}, theta1 = {theta1}")
 
-    print(f"Training complete. Parameters saved: theta0 = {theta0}, theta1 = {theta1}")
+	# Save the parameters to a file
+	with open('thetas.txt', 'w') as f:
+		f.write(f"{theta0},{theta1}")
+
+	print(f"Training complete. Parameters saved: theta0 = {theta0}, theta1 = {theta1}")
 
 if __name__ == "__main__":
-    main()
+	main()

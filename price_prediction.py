@@ -7,49 +7,47 @@ from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error, r2_score	
 
-def read_data_from_file(filename):
+def read_thetas_from_file(filename):
     # Load the dataset
 	try:
-		data = pd.read_csv(filename)
+		# Open the file and read the first line
+		with open(filename, 'r') as file:
+			buffer = file.readline().strip()  # Read the first line and remove any trailing whitespace
+
+		# Split the line by the comma
+		theta0, theta1 = buffer.split(',')
+		if not theta0 or not theta1:
+			raise ValueError("Found no value for theta0 and/or theta1")
 		# Display the first few rows of the dataset
 	except Exception as e:
 		print(f"An unexpected error occurred: {e}")
 		sys.exit()
-	return data
+	return float(theta0), float(theta1) if theta0 and theta1 else None
 
 # Parse given arguments and get the thetaset filename
 def parse_args():
 	# Create the parser
-	parser = argparse.ArgumentParser(description="""This program will be used to train
-	your model. It will read your dataset file and perform a linear regression on
-	the data. Once the linear regression has completed, theta0 and theta1 values will be
-	saved for use in the price prediction program.
-	It will be using the following formulas:
-	tmp_theta0 = learningRate * (1/m) * sum(i=0 to m-1) (estimatePrice(mileage[i]) - price[i])
-	tmp_theta1 = learningRate * (1/m) * sum(i=0 to m-1) (estimatePrice(mileage[i]) - price[i]) """)
+	parser = argparse.ArgumentParser(description="""This program will be
+	used to predict the price of a car for a given mileage. 
+	When you launch the program, it should prompt you for a mileage, and then
+	give you back the estimated price for that mileage. The program will use
+	the following hypothesis to predict the price:
+	estimateP rice(mileage) = θ0 + (θ1 ∗ mileage)""")
 
     # Add arguments. There must be two arguments for filenames
-    parser.add_argument('thetaset_file', type=str, help='the name of the dataset file to read')
-    parser.add_argument('dataset_file', type=str, help='the name of the thetaset file to read')
+	parser.add_argument('thetaset_file', type=str, help='the name of the thetaset file to read')
 
-    # Parse the arguments
-    args = parser.parse_args()
+	# Parse the arguments
+	args = parser.parse_args()
 
     # Return the two filenames
-    return args.file1, args.file2
+	return args.thetaset_file
 
-def estimate_price(thetaset_filename, mileage):
-	# Get the theta values from the corresponding file 
-	thetaset = read_data_from_file(thetaset_filename)
-	
-	# Extracting the independent and dependent variables
-	theta0 = thetaset['theta0'].values[0]
-	theta1 = thetaset['theta1'].values[0]
-	
-	print(f"theta0: {theta0}\ntheta1: {theta1}")
+def estimate_price(theta0, theta1, mileage):	
+	print(f"estimate >> theta0: {theta0}\ttheta1: {theta1}\tmileage: {mileage}")
 
 	# Return estimation
-	return theta0 + (mileage * theta1)
+	return theta0 + (float(mileage) * theta1)
 
 def main():
 	# From the arguments, get the mileage to predict the price from
@@ -58,8 +56,15 @@ def main():
 	# Prompt the user for mileage
 	mileage = int(input("Enter the mileage of the car (in km): "))
 
+	# Get the theta values from the corresponding file 
+	try:
+		theta0, theta1 = read_thetas_from_file(thetaset_filename)
+	except Exception as e:
+		print(f"An unexpected error occurred: {e}")
+		sys.exit()
+
 	# Predict the price of the car
-	predicted_price = estimate_price(thetaset_filename, mileage)
+	predicted_price = estimate_price(theta0, theta1, mileage)
 
 	# Print the predicted price
 	print(f"\nPredicted price: {predicted_price}")
