@@ -2,47 +2,42 @@ import sys
 import numpy as np
 import pandas as pd
 import argparse
-from price_prediction import estimate_price, read_thetas_from_file
+from price_prediction import estimate_price, read_thetas_from_file, get_feature_and_parameters
 
-def train_model(thetaset_filename, data, learning_rate):
-	m = len(data)  # Number of observations
-	try:
-		theta0, theta1 = read_thetas_from_file(thetaset_filename)
-	except Exception as e:
-		print(f"An unexpected error occurred: {e}")
+def save_parameters_to_file(thetaset_filename, theta0, theta1):
+	"""Save the parameters (theta0 & theta1) to the corresponding file"""
+	if np.isnan(theta0) or np.isnan(theta1):
+		print("theta0 or theta1 is NaN!\n")
 		sys.exit()
+
+	try:
+		with open(thetaset_filename, 'w') as f:
+			f.write(f"{theta0},{theta1}")
+	except Exception as e:
+		print(f"An unexpected error occurred: {e}\n")
+
+	print(f"\033[33mUpdated parameters: theta0 = {theta0}, theta1 = {theta1}\033[0m\n")
+
+def train_model(thetaset_filename, dataset_filename, learning_rate):
+	# Get thetaset, feature (mileage) and target (price) values
+	theta0, theta1, X, y = get_feature_and_parameters(thetaset_filename, dataset_filename)
+
+	m = len(y)  # Number of observations
 	iterations = 1000
 
-	# Extract km and price values from the data
-	km_values = np.array(data['km'], dtype=float)
-	price_values = np.array(data['price'], dtype=float)
+	# Normalize X
+	X_mean = np.mean(X)
+	X_std = np.std(X)
+	X_normalized = (X - X_mean) / X_std
 
 	for _ in range(iterations):
-		error = 0
-
-		for i in range(m):
-			print(f"km: {km_values[i]}, price: {price_values[i]}")
-			# Calculate predictions
-			prediction = estimate_price(theta0, theta1, km_values[i])  # Assuming estimate_price takes km as input
-			error += prediction - price_values[i]  # Calculate the error
-			print(f"\033[31mPrediction: {prediction}, Actual Price: {price_values[i]}\033[0m")
-			print(f"\033[33mError: {error}\033[0m")
-
-		# Calculate the gradients
-		tmp_theta0 = learning_rate * (1/m) * error # Gradient for theta0
-		tmp_theta1 = learning_rate * (1/m) * error * km_values[i] # Gradient for theta1
-
-		# Update the parameters
+		error = (estimate_price(theta0, theta1, X, y) - y)  # Error vector
+		tmp_theta0 = learning_rate * (1/m) * np.sum(error)
+		tmp_theta1 = learning_rate * (1/m) * np.sum(error * X_normalized)
 		theta0 -= tmp_theta0
 		theta1 -= tmp_theta1
 
-		print(f"\033[32mtheta0 = {theta0}, theta1 = {theta1}\033[0m")
-		print(f"TMP theta0 = {tmp_theta0}, theta1 = {tmp_theta1}")
-
-		if np.isnan(theta0) or np.isnan(theta1):
-			print("Theta0 or 1 is NaN!!")
-			sys.exit()
-	return theta0, theta1
+		save_parameters_to_file(thetaset_filename, theta0, theta1)
 
 # Parse given arguments and get the thetaset filename
 def parse_args():
@@ -56,15 +51,15 @@ def parse_args():
 	tmp_theta1 = learningRate * (1/m) * sum(i=0 to m-1) (estimatePrice(mileage[i]) - price[i]) """)
 
 	# Add arguments. There must be two arguments for filenames
-	parser.add_argument('thetaset_file', type=str, help='the name of the thetaset file to read')
-	parser.add_argument('dataset_file', type=str,
+	parser.add_argument('thetaset_filename', type=str, help='the name of the thetaset file to read')
+	parser.add_argument('dataset_filename', type=str,
 						help='a string with the name of the data file to read')
 
 	# Parse the arguments
 	args = parser.parse_args()
 
 	# Access the two given arguments
-	return args.thetaset_file, args.dataset_file
+	return args.thetaset_filename, args.dataset_filename
 
 def main():
 	# From the arguments, get the mileage to predict the price from
@@ -76,18 +71,12 @@ def main():
 	print(data.describe())
 
 	# Set hyperparameters
-	learning_rate = 0.01
+	learning_rate = 0.001
 
 	# Train the model
-	theta0, theta1 = train_model(thetaset_filename, data, learning_rate)
+	train_model(thetaset_filename, dataset_filename, learning_rate)
 
-	print(f"Updated parameters: theta0 = {theta0}, theta1 = {theta1}")
-
-	# Save the parameters to a file
-	with open('thetas.txt', 'w') as f:
-		f.write(f"{theta0},{theta1}")
-
-	print(f"Training complete. Parameters saved: theta0 = {theta0}, theta1 = {theta1}")
+	print(f"\n\033[32mTraining complete.\033[0m")
 
 if __name__ == "__main__":
 	main()

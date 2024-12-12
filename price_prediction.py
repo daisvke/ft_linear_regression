@@ -35,36 +35,51 @@ def parse_args():
 	estimateP rice(mileage) = θ0 + (θ1 ∗ mileage)""")
 
     # Add arguments. There must be two arguments for filenames
-	parser.add_argument('thetaset_file', type=str, help='the name of the thetaset file to read')
+	parser.add_argument('thetaset_filename', type=str, help='the name of the thetaset file to read')
+	parser.add_argument('dataset_filename', type=str, help='the name of the dataset file to read')
 
 	# Parse the arguments
 	args = parser.parse_args()
 
     # Return the two filenames
-	return args.thetaset_file
+	return args.thetaset_filename, args.dataset_filename
 
-def estimate_price(theta0, theta1, mileage):	
-	print(f"estimate >> theta0: {theta0}\ttheta1: {theta1}\tmileage: {mileage}")
+def estimate_price(theta0, theta1, X, mileage):	
+	"""
+	theta0 is the intercept (constant term).
+	theta1 is the slope (how much y changes with x).
+	"""
 
+	# Normalize feature values
+	X_mean = np.mean(X)
+	X_std = np.std(X)
+	mileage_normalized = (mileage - X_mean) / X_std
 	# Return estimation
-	return theta0 + (float(mileage) * theta1)
+	return theta0 + (mileage_normalized * theta1)
 
-def main():
-	# From the arguments, get the mileage to predict the price from
-	thetaset_filename = parse_args()
-
-	# Prompt the user for mileage
-	mileage = int(input("Enter the mileage of the car (in km): "))
-
+def get_feature_and_parameters(thetaset_filename, dataset_filename): 
 	# Get the theta values from the corresponding file 
 	try:
 		theta0, theta1 = read_thetas_from_file(thetaset_filename)
+		data = pd.read_csv(dataset_filename)
 	except Exception as e:
 		print(f"An unexpected error occurred: {e}")
 		sys.exit()
 
+	return theta0, theta1, data['km'].values, data['price'].values
+
+def main():
+	# From the arguments, get the mileage to predict the price from
+	thetaset_filename, dataset_filename = parse_args()
+
+	# Prompt the user for mileage
+	mileage = int(input("Enter the mileage of the car (in km): "))
+
+	# Get thetaset and feature values
+	theta0, theta1, X, _ = get_feature_and_parameters(thetaset_filename, dataset_filename)
+
 	# Predict the price of the car
-	predicted_price = estimate_price(theta0, theta1, mileage)
+	predicted_price = estimate_price(theta0, theta1, X, mileage)
 
 	# Print the predicted price
 	print(f"\nPredicted price: {predicted_price}")
