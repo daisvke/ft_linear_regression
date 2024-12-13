@@ -58,8 +58,10 @@ def train_model(thetaset_filename, dataset_filename):
 
 		prev_cost = cost
 
+		# Compute temporary parameters
 		tmp_theta0 = learning_rate * (1/m) * np.sum(error)
 		tmp_theta1 = learning_rate * (1/m) * np.sum(error * X_normalized)
+		# Update parameters
 		theta0 -= tmp_theta0
 		theta1 -= tmp_theta1
 

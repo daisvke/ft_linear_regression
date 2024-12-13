@@ -31,10 +31,17 @@ def load_feature_and_parameters(thetaset_filename, dataset_filename):
 	# Get the theta values from the corresponding file 
 	try:
 		theta0, theta1 = read_parameters_from_file(thetaset_filename)
+
+		# Display current parameter values
+		print("│\n├── Parameters:")
+		print(f"│   ├── theta0 = {theta0}\n│   └── theta1 = {theta1}\n│")
+
 		# Load the dataset
 		data = pd.read_csv(dataset_filename)
-		# Describe data
-		print(data.describe())
+
+		# Display general informations about the data
+		print("└── Data:")
+		print(data.describe(), "\n")
 
 	except Exception as e:
 		print(f"An unexpected error occurred: {e}", file=sys.stderr)

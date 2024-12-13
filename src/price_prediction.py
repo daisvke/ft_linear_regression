@@ -2,6 +2,7 @@ import sys
 import argparse
 import numpy as np
 from config import load_filenames, load_feature_and_parameters
+from ascii_format import *
 
 '''
 # Parse given arguments and get the thetaset filename
@@ -25,18 +26,22 @@ def parse_args():
 	return args.thetaset_filename, args.dataset_filename
 '''
 
-def estimate_price(theta0, theta1, X, mileage):	
+def estimate_price(theta0, theta1, X, mileage, verbose=False):	
 	"""
 	theta0 is the intercept (constant term).
 	theta1 is the slope (how much y changes with x).
 	"""
-	print(f"\ntheta0 = {theta0} / theta1 = {theta1} / mileage = {mileage}\n")
 
 	# Normalize feature values
+	if verbose:
+		print(f"{INFO} Normalizing feature values...")
 	X_mean = np.mean(X)
 	X_std = np.std(X)
 	mileage_normalized = (mileage - X_mean) / X_std
 	# Return estimation
+	if verbose:
+		print(f"{INFO} Making estimation...")
+		print(f"{INFO} Applied hypothesis: estimatePrice(mileage) = θ0 + (θ1 * mileage)")
 	return theta0 + (mileage_normalized * theta1)
 
 def main():
@@ -48,10 +53,10 @@ def main():
 	else:
 		print("Missing filename(s) in the configuration file.\n",
 			file=sys.stderr)
-
-	# Prompt the user for mileage
-	try:
-		mileage = int(input("Enter the mileage of the car (in km): "))
+	print("This program will predict the price of a car from its mileage.\n")
+	
+	try: # Prompt the user for mileage
+		mileage = int(input("├── Enter the mileage of the car (in km): "))
 	except ValueError:
 		print("\033[31mInvalid input. Please enter a number.\033[0m",
 			file=sys.stderr)
@@ -61,10 +66,9 @@ def main():
 	theta0, theta1, X, _ = load_feature_and_parameters(thetaset_filename, dataset_filename)
 
 	# Predict the price of the car
-	predicted_price = estimate_price(theta0, theta1, X, mileage)
-
-	# Print the predicted price
-	print(f"\033[33mPredicted price: {predicted_price}\033[0m")
+	predicted_price = estimate_price(theta0, theta1, X, mileage, True)
+	print(f"{DONE}")
+	print(f"\n{BG_YELLOW}{RED} Predicted price: {predicted_price} {RESET}\n")
 
 if __name__ == "__main__":
 	main()

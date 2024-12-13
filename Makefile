@@ -1,5 +1,3 @@
-.PHONY: all train estim freeze clean re
-
 VENV_DIR	= venv
 PYTHON_OS	= python3
 PYTHON		= $(VENV_DIR)/bin/python3
@@ -14,6 +12,8 @@ GREEN		= \033[32m
 YELLOW		= \033[33m
 RED			= \033[31m
 
+.PHONY: all install setup train estim freeze clean re
+
 all: setup
 
 # Create the python virtual environment
@@ -21,9 +21,17 @@ $(VENV_DIR):
 	@echo "$(CYAN)Creating virtual environment...$(RESET)"
 	$(PYTHON_OS) -m venv $(VENV_DIR)
 
+# Upgrade pip command, then install the packages
+#
+# There is an animated progress spinner at the bottom of the terminal.
+# Its frame is updated every slept seconds. The 'frames' variable contains
+#  all the spinner frames.
+# The 'while kill -0 $$pid' loop checks if the process ($$pid) is still running.
+# The \r carriage return ensures the spinner stays on the same line.
 install: $(VENV_DIR)
 	@echo "$(YELLOW)Upgrading pip...$(RESET)"
 	$(PIP) install --upgrade pip
+
 	@if [ -f "requirements.txt" ]; then \
 		( \
 			$(PIP) install -r requirements.txt & \
