@@ -2,10 +2,6 @@ import sys
 import argparse
 import pandas as pd
 import numpy as np
-import matplotlib.pyplot as plt
-from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LinearRegression
-from sklearn.metrics import mean_squared_error, r2_score	
 
 def read_thetas_from_file(filename):
     # Load the dataset
@@ -49,7 +45,7 @@ def estimate_price(theta0, theta1, X, mileage):
 	theta0 is the intercept (constant term).
 	theta1 is the slope (how much y changes with x).
 	"""
-	print(f"theta0: {theta0}\ttheta1: {theta1}\tmileage: {mileage}\n")
+	print(f"\ntheta0 = {theta0} / theta1 = {theta1} / mileage = {mileage}\n")
 
 	# Normalize feature values
 	X_mean = np.mean(X)
@@ -62,7 +58,11 @@ def get_feature_and_parameters(thetaset_filename, dataset_filename):
 	# Get the theta values from the corresponding file 
 	try:
 		theta0, theta1 = read_thetas_from_file(thetaset_filename)
+		# Load the dataset
 		data = pd.read_csv(dataset_filename)
+		# Describe data
+		print(data.describe())
+
 	except Exception as e:
 		print(f"An unexpected error occurred: {e}")
 		sys.exit()
@@ -83,7 +83,7 @@ def main():
 	predicted_price = estimate_price(theta0, theta1, X, mileage)
 
 	# Print the predicted price
-	print(f"\nPredicted price: {predicted_price}")
+	print(f"\033[33mPredicted price: {predicted_price}\033[0m")
 
 if __name__ == "__main__":
 	main()
