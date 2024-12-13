@@ -90,19 +90,22 @@ def parse_args():
 '''
 
 def main():
-	# Load filenames from the configuration file
-	filenames = load_filenames()
-	# Unpack the filenames into two separate variables
-	if len(filenames) >= 2:
-		thetaset_filename, dataset_filename = filenames
-	else:
-		print("Missing filename(s) in the configuration file.\n",
-			file=sys.stderr)
+	try:
+		# Load filenames from the configuration file
+		filenames = load_filenames()
+		# Unpack the filenames into two separate variables
+		if len(filenames) >= 2:
+			thetaset_filename, dataset_filename = filenames
+		else:
+			print("Missing filename(s) in the configuration file.\n",
+				file=sys.stderr)
 
-	# Train the model
-	train_model(thetaset_filename, dataset_filename)
+		# Train the model
+		train_model(thetaset_filename, dataset_filename)
 
-	print(f"\n\033[32mTraining complete.\033[0m")
+		print(f"\n\033[32mTraining complete.\033[0m")
+	except KeyboardInterrupt:
+		print("\nExiting...")
 
 if __name__ == "__main__":
 	main()

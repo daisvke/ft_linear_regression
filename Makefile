@@ -24,8 +24,9 @@ freeze:
 	$(PIP_VERS) freeze > requirements.txt
 
 clean:
-	echo "0.0,0.0" > $(PARAMS_PATH) # Init parameters
+	echo "0.0,0.0" > $(PARAMS_PATH) # Reset parameters
 
+# Reset parameters and launch the training
 fclean: clean
 	deactivate # Deactivate the current environment
 	
