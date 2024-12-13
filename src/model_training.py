@@ -4,20 +4,21 @@ import pandas as pd
 import argparse
 from price_prediction import estimate_price
 from config import load_filenames, load_feature_and_parameters
+from ascii_format import *
 
 def save_parameters_to_file(thetaset_filename, theta0, theta1):
 	"""Save the parameters (theta0 & theta1) to the corresponding file"""
 	if np.isnan(theta0) or np.isnan(theta1):
-		print("theta0 or theta1 is NaN!\n")
+		print("{ERROR} theta0 or theta1 is NaN\n")
 		sys.exit()
 
 	try:
 		with open(thetaset_filename, 'w') as f:
 			f.write(f"{theta0},{theta1}")
 	except Exception as e:
-		print(f"An unexpected error occurred: {e}\n")
+		print(f"{ERROR} An unexpected error occurred: {e}\n")
 
-	print(f"\033[33mUpdated parameters: theta0 = {theta0}, theta1 = {theta1}\033[0m\n")
+	print(f"{INFO} Updated parameters: theta0 = {theta0}, theta1 = {theta1}\n")
 
 def train_model(thetaset_filename, dataset_filename):
 	# Get thetaset, feature (mileage) and target (price) values
@@ -32,13 +33,14 @@ def train_model(thetaset_filename, dataset_filename):
 	X_std = np.std(X)
 	X_normalized = (X - X_mean) / X_std
 
-	prev_cost = float('inf')  # Set an initial large cost value
-	tolerance = 1e-6          # Define a tolerance for cost improvement
-	print(f"m: {X_mean}, std: {X_std}, X_nom: {X_normalized}")
+	print(f"{INFO} Normalization: mean = {X_mean}, standard deviation = {X_std}\n")
 
-	for _ in range(iterations):
+	prev_cost = float('inf')	# Set an initial large cost value
+	tolerance = 1e-10			# Define a tolerance for cost improvement
+
+	for i in range(iterations):
 		prediction = estimate_price(theta0, theta1, X, X) 
-		error = (prediction - y)  # Error vector
+		error = (prediction - y)
 
 		"""
 		Set an early stopping condition for the loop. This approach can help
@@ -47,13 +49,18 @@ def train_model(thetaset_filename, dataset_filename):
 		computation time.
 		"""
 		cost = np.sum(error ** 2) / (2 * m)
-		print(f"Iteration {_}: Prediction = {prediction}, Price = {y}, Cost = {cost}")
+        
+		# Log output every 10 iterations and at the last iteration
+		if i % 10 == 0 or i == iterations - 1: 
+			print(f"{INFO} Iteration {i}:")
+			print(f"{INFO} Prediction 1 = {prediction[0]}, Price 1 = {y[0]}, Cost = {cost}")
+			print(f"{INFO} Prediction 2 = {prediction[1]}, Price 2 = {y[1]}, Cost = {cost}")
 		# Check for divergence or convergence
 		if cost > prev_cost: # Set a Stopping Condition
-			print(f"\033[33mCost increased at iteration {_}. Stopping early to prevent divergence.\033[0m")
+			print(f"{INFO} Cost increased at iteration {i}. Stopping early to prevent divergence.")
 			break
 		elif abs(prev_cost - cost) < tolerance:
-			print(f"\033[33mCost improvement below tolerance at iteration {_}. Converged.\033[0m")
+			print(f"{INFO} Cost improvement below tolerance at iteration {i}. Converged.")
 			break
 
 		prev_cost = cost
@@ -65,7 +72,9 @@ def train_model(thetaset_filename, dataset_filename):
 		theta0 -= tmp_theta0
 		theta1 -= tmp_theta1
 
-		save_parameters_to_file(thetaset_filename, theta0, theta1)
+		# Save parameters every 10 iterations and at the last iteration
+		if i % 10 == 0 or i == iterations - 1: 
+			save_parameters_to_file(thetaset_filename, theta0, theta1)
 
 '''
 # Parse given arguments and get the thetaset filename
@@ -99,15 +108,15 @@ def main():
 		if len(filenames) >= 2:
 			thetaset_filename, dataset_filename = filenames
 		else:
-			print("Missing filename(s) in the configuration file.\n",
+			print("{ERROR} Missing filename(s) in the configuration file.\n",
 				file=sys.stderr)
 
 		# Train the model
 		train_model(thetaset_filename, dataset_filename)
 
-		print(f"\n\033[32mTraining complete.\033[0m")
+		print(f"\n{DONE} Training complete.")
 	except KeyboardInterrupt:
-		print("\nExiting...")
+		print(f"\n{INFO} Exiting...")
 
 if __name__ == "__main__":
 	main()

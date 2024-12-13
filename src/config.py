@@ -1,4 +1,6 @@
 import pandas as pd
+from ascii_format import *
+import sys
 
 def load_filenames(filename='params/filenames.txt'):
 	"""
@@ -12,19 +14,16 @@ def load_filenames(filename='params/filenames.txt'):
 
 def read_parameters_from_file(filename):
     # Load the dataset
-	try:
-		# Open the file and read the first line
-		with open(filename, 'r') as file:
-			buffer = file.readline().strip()  # Read the first line and remove any trailing whitespace
+	# Open the file and read the first line
+	with open(filename, 'r') as file:
+		buffer = file.readline().strip()  # Read the first line and remove any trailing whitespace
 
-		# Split the line by the comma
-		theta0, theta1 = buffer.split(',')
-		if not theta0 or not theta1:
-			raise ValueError("Found no value for theta0 and/or theta1")
-		# Display the first few rows of the dataset
-	except Exception as e:
-		print(f"An unexpected error occurred: {e}", file=sys.stderr)
-		sys.exit(1)
+	# Split the line by the comma
+	theta0, theta1 = buffer.split(',')
+	if not theta0 or not theta1:
+		raise ValueError("Found no value for theta0 and/or theta1")
+	# Display the first few rows of the dataset
+
 	return float(theta0), float(theta1) if theta0 and theta1 else None
 
 def load_feature_and_parameters(thetaset_filename, dataset_filename): 
@@ -44,7 +43,7 @@ def load_feature_and_parameters(thetaset_filename, dataset_filename):
 		print(data.describe(), "\n")
 
 	except Exception as e:
-		print(f"An unexpected error occurred: {e}", file=sys.stderr)
+		print(f"{ERROR} An unexpected error occurred: {e}", file=sys.stderr)
 		sys.exit(1)
 
 	return theta0, theta1, data['km'].values, data['price'].values

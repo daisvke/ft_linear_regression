@@ -51,14 +51,14 @@ def main():
 	if len(filenames) >= 2:
 		thetaset_filename, dataset_filename = filenames
 	else:
-		print("Missing filename(s) in the configuration file.\n",
+		print(f"{ERROR} Missing filename(s) in the configuration file.\n",
 			file=sys.stderr)
 	print("This program will predict the price of a car from its mileage.\n")
 	
 	try: # Prompt the user for mileage
 		mileage = int(input("├── Enter the mileage of the car (in km): "))
 	except ValueError:
-		print("\033[31mInvalid input. Please enter a number.\033[0m",
+		print(f"{ERROR} Invalid input. Please enter a number.",
 			file=sys.stderr)
 		sys.exit(1)
 
@@ -67,8 +67,7 @@ def main():
 
 	# Predict the price of the car
 	predicted_price = estimate_price(theta0, theta1, X, mileage, True)
-	print(f"{DONE}")
-	print(f"\n{BG_YELLOW}{RED} Predicted price: {predicted_price} {RESET}\n")
+	print(f"{DONE} Predicted price: {BG_YELLOW}{RED}{predicted_price}{RESET}\n")
 
 if __name__ == "__main__":
 	main()
