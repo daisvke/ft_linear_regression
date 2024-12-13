@@ -2,7 +2,8 @@ import sys
 import numpy as np
 import pandas as pd
 import argparse
-from price_prediction import estimate_price, read_thetas_from_file, get_feature_and_parameters
+from price_prediction import estimate_price, read_thetas_from_file, load_feature_and_parameters
+from config import load_filenames
 
 def save_parameters_to_file(thetaset_filename, theta0, theta1):
 	"""Save the parameters (theta0 & theta1) to the corresponding file"""
@@ -20,7 +21,7 @@ def save_parameters_to_file(thetaset_filename, theta0, theta1):
 
 def train_model(thetaset_filename, dataset_filename):
 	# Get thetaset, feature (mileage) and target (price) values
-	theta0, theta1, X, y = get_feature_and_parameters(thetaset_filename, dataset_filename)
+	theta0, theta1, X, y = load_feature_and_parameters(thetaset_filename, dataset_filename)
 
 	m = len(y)  # Number of observations
 	iterations = 1000

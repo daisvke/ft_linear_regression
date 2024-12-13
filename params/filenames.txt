@@ -1,0 +1,2 @@
+params/thetas.txt
+data/data.csv

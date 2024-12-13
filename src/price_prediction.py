@@ -2,6 +2,7 @@ import sys
 import argparse
 import pandas as pd
 import numpy as np
+from config import load_filenames
 
 def read_thetas_from_file(filename):
     # Load the dataset
@@ -16,8 +17,8 @@ def read_thetas_from_file(filename):
 			raise ValueError("Found no value for theta0 and/or theta1")
 		# Display the first few rows of the dataset
 	except Exception as e:
-		print(f"An unexpected error occurred: {e}")
-		sys.exit()
+		print(f"An unexpected error occurred: {e}", file=sys.stderr)
+		sys.exit(1)
 	return float(theta0), float(theta1) if theta0 and theta1 else None
 
 # Parse given arguments and get the thetaset filename
@@ -54,7 +55,7 @@ def estimate_price(theta0, theta1, X, mileage):
 	# Return estimation
 	return theta0 + (mileage_normalized * theta1)
 
-def get_feature_and_parameters(thetaset_filename, dataset_filename): 
+def load_feature_and_parameters(thetaset_filename, dataset_filename): 
 	# Get the theta values from the corresponding file 
 	try:
 		theta0, theta1 = read_thetas_from_file(thetaset_filename)
@@ -64,20 +65,30 @@ def get_feature_and_parameters(thetaset_filename, dataset_filename):
 		print(data.describe())
 
 	except Exception as e:
-		print(f"An unexpected error occurred: {e}")
-		sys.exit()
+		print(f"An unexpected error occurred: {e}", file=sys.stderr)
+		sys.exit(1)
 
 	return theta0, theta1, data['km'].values, data['price'].values
 
 def main():
-	# From the arguments, get the mileage to predict the price from
-	thetaset_filename, dataset_filename = parse_args()
+	# Load filenames from the configuration file
+	filenames = load_filenames()
+	# Unpack the filenames into two separate variables
+	if len(filenames) >= 2:
+		thetaset_filename, dataset_filename = filenames
+	else:
+		print("Missing filename(s) in the configuration file.\n")
 
 	# Prompt the user for mileage
-	mileage = int(input("Enter the mileage of the car (in km): "))
+	try:
+		mileage = int(input("Enter the mileage of the car (in km): "))
+	except ValueError:
+		print("\033[31mInvalid input. Please enter a number.\033[0m",
+			file=sys.stderr)
+		sys.exit(1)
 
 	# Get thetaset and feature values
-	theta0, theta1, X, _ = get_feature_and_parameters(thetaset_filename, dataset_filename)
+	theta0, theta1, X, _ = load_feature_and_parameters(thetaset_filename, dataset_filename)
 
 	# Predict the price of the car
 	predicted_price = estimate_price(theta0, theta1, X, mileage)
