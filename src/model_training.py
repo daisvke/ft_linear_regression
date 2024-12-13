@@ -65,6 +65,7 @@ def train_model(thetaset_filename, dataset_filename):
 
 		save_parameters_to_file(thetaset_filename, theta0, theta1)
 
+'''
 # Parse given arguments and get the thetaset filename
 def parse_args():
 	# Create the parser
@@ -86,10 +87,17 @@ def parse_args():
 
 	# Access the two given arguments
 	return args.thetaset_filename, args.dataset_filename
+'''
 
 def main():
-	# From the arguments, get the mileage to predict the price from
-	thetaset_filename, dataset_filename = parse_args()
+	# Load filenames from the configuration file
+	filenames = load_filenames()
+	# Unpack the filenames into two separate variables
+	if len(filenames) >= 2:
+		thetaset_filename, dataset_filename = filenames
+	else:
+		print("Missing filename(s) in the configuration file.\n",
+			file=sys.stderr)
 
 	# Train the model
 	train_model(thetaset_filename, dataset_filename)

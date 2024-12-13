@@ -21,6 +21,7 @@ def read_thetas_from_file(filename):
 		sys.exit(1)
 	return float(theta0), float(theta1) if theta0 and theta1 else None
 
+'''
 # Parse given arguments and get the thetaset filename
 def parse_args():
 	# Create the parser
@@ -40,6 +41,7 @@ def parse_args():
 
     # Return the two filenames
 	return args.thetaset_filename, args.dataset_filename
+'''
 
 def estimate_price(theta0, theta1, X, mileage):	
 	"""
@@ -77,7 +79,8 @@ def main():
 	if len(filenames) >= 2:
 		thetaset_filename, dataset_filename = filenames
 	else:
-		print("Missing filename(s) in the configuration file.\n")
+		print("Missing filename(s) in the configuration file.\n",
+			file=sys.stderr)
 
 	# Prompt the user for mileage
 	try:
