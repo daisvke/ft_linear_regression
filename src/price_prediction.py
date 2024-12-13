@@ -1,25 +1,7 @@
 import sys
 import argparse
-import pandas as pd
 import numpy as np
-from config import load_filenames
-
-def read_thetas_from_file(filename):
-    # Load the dataset
-	try:
-		# Open the file and read the first line
-		with open(filename, 'r') as file:
-			buffer = file.readline().strip()  # Read the first line and remove any trailing whitespace
-
-		# Split the line by the comma
-		theta0, theta1 = buffer.split(',')
-		if not theta0 or not theta1:
-			raise ValueError("Found no value for theta0 and/or theta1")
-		# Display the first few rows of the dataset
-	except Exception as e:
-		print(f"An unexpected error occurred: {e}", file=sys.stderr)
-		sys.exit(1)
-	return float(theta0), float(theta1) if theta0 and theta1 else None
+from config import load_filenames, load_feature_and_parameters
 
 '''
 # Parse given arguments and get the thetaset filename
@@ -56,21 +38,6 @@ def estimate_price(theta0, theta1, X, mileage):
 	mileage_normalized = (mileage - X_mean) / X_std
 	# Return estimation
 	return theta0 + (mileage_normalized * theta1)
-
-def load_feature_and_parameters(thetaset_filename, dataset_filename): 
-	# Get the theta values from the corresponding file 
-	try:
-		theta0, theta1 = read_thetas_from_file(thetaset_filename)
-		# Load the dataset
-		data = pd.read_csv(dataset_filename)
-		# Describe data
-		print(data.describe())
-
-	except Exception as e:
-		print(f"An unexpected error occurred: {e}", file=sys.stderr)
-		sys.exit(1)
-
-	return theta0, theta1, data['km'].values, data['price'].values
 
 def main():
 	# Load filenames from the configuration file

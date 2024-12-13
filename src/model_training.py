@@ -2,8 +2,8 @@ import sys
 import numpy as np
 import pandas as pd
 import argparse
-from price_prediction import estimate_price, read_thetas_from_file, load_feature_and_parameters
-from config import load_filenames
+from price_prediction import estimate_price
+from config import load_filenames, load_feature_and_parameters
 
 def save_parameters_to_file(thetaset_filename, theta0, theta1):
 	"""Save the parameters (theta0 & theta1) to the corresponding file"""
