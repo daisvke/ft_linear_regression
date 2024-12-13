@@ -49,6 +49,7 @@ def estimate_price(theta0, theta1, X, mileage):
 	theta0 is the intercept (constant term).
 	theta1 is the slope (how much y changes with x).
 	"""
+	print(f"theta0: {theta0}\ttheta1: {theta1}\tmileage: {mileage}\n")
 
 	# Normalize feature values
 	X_mean = np.mean(X)
