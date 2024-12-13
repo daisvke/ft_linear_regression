@@ -19,3 +19,19 @@ Once the linear regression has completed, the variables theta0 and theta1 will b
 
 * We will be using the following formulas:
 <img src="screenshots/formulas.png" />
+
+## Commands
+```
+// Set up the environment
+make
+
+// Launch the training
+make re
+or
+python src/model_training.py
+
+// Make a prediction
+make estim
+or
+python src/price_prediction.py
+```
