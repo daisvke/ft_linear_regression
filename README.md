@@ -9,7 +9,7 @@ Linear regression is a fundamental statistical method used to model the relation
 * Independent Variables (Features): The variables used to predict the dependent variable (e.g., square footage, number of bedrooms).
 
 * Linear Relationship: The relationship is represented by a linear equation of the form:<br />
-  `y = b0 ​+ b1x1 ​+ b2​x2 ​+ ... + bn​xn​ + ϵ`<br /><br />
+  `y = b0 ​+ b1x1 ​+ b2​x2 ​+ ... + bn​xn​ + ϵ`
     
     Where:<br />
         - y is the predicted value.<br />
