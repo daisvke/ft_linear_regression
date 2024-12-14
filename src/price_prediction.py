@@ -53,16 +53,18 @@ def main():
 
 	try: # Prompt the user for mileage
 		mileage = int(input("├── Enter the mileage of the car (in km): "))
+		if mileage < 0: raise ValueError()
 	except ValueError:
-		print(f"{ERROR} Invalid input. Please enter a number.",
+		print(f"{ERROR} Invalid input. Please enter a positive number.",
 			file=sys.stderr)
 		sys.exit(1)
 
 	# Get thetaset and feature values
 	theta0, theta1, X, _ = load_feature_and_parameters(thetaset_filename, dataset_filename)
 
-	# Predict the price of the car
-	predicted_price = estimate_price(theta0, theta1, X, mileage, True)
+	# Predict the price of the car. We only return positive values as
+	# prices should not be negative
+	predicted_price = max(0, estimate_price(theta0, theta1, X, mileage, True))
 	print(f"{DONE} Predicted price: {BG_YELLOW}{RED} {predicted_price} {RESET}\n")
 
 if __name__ == "__main__":
