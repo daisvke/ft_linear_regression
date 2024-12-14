@@ -6,6 +6,21 @@ from price_prediction import estimate_price
 from config import load_filenames, load_feature_and_parameters
 from ascii_format import *
 
+"""
+This program will be used to train the model.
+It will read the dataset file and perform a linear regression on the data.
+
+Once the linear regression has completed, theta0 and theta1 values will be
+saved for use in the price prediction program.
+
+It will be using the following formulas:
+
+	tmp_theta0 = learningRate * (1/m) * sum(i=0 to m-1) (estimatePrice(mileage[i]) - price[i])
+
+	tmp_theta1 = learningRate * (1/m) * sum(i=0 to m-1) ((estimatePrice(mileage[i]) - price[i]) * normalized_mileage)
+"""
+
+
 def save_parameters_to_file(thetaset_filename, theta0, theta1):
 	"""Save the parameters (theta0 & theta1) to the corresponding file"""
 	if np.isnan(theta0) or np.isnan(theta1):
@@ -28,7 +43,13 @@ def train_model(thetaset_filename, dataset_filename):
 	iterations = 1000
 	learning_rate = 0.01
 
-	# Normalize X
+	"""
+	Normalization:
+	- The mean is the average of a set of numbers, representing the
+		central value of the dataset.
+	- The standard deviation measures the spread or dispersion of data
+		points from the mean.
+	"""
 	X_mean = np.mean(X)
 	X_std = np.std(X)
 	X_normalized = (X - X_mean) / X_std
@@ -75,30 +96,6 @@ def train_model(thetaset_filename, dataset_filename):
 		# Save parameters every 10 iterations and at the last iteration
 		if i % 10 == 0 or i == iterations - 1: 
 			save_parameters_to_file(thetaset_filename, theta0, theta1)
-
-'''
-# Parse given arguments and get the thetaset filename
-def parse_args():
-	# Create the parser
-	parser = argparse.ArgumentParser(description="""This program will be used to train
-	your model. It will read your dataset file and perform a linear regression on
-	the data. Once the linear regression has completed, theta0 and theta1 values will be
-	saved for use in the price prediction program.
-	It will be using the following formulas:
-	tmp_theta0 = learningRate * (1/m) * sum(i=0 to m-1) (estimatePrice(mileage[i]) - price[i])
-	tmp_theta1 = learningRate * (1/m) * sum(i=0 to m-1) (estimatePrice(mileage[i]) - price[i]) """)
-
-	# Add arguments. There must be two arguments for filenames
-	parser.add_argument('thetaset_filename', type=str, help='the name of the thetaset file to read')
-	parser.add_argument('dataset_filename', type=str,
-						help='a string with the name of the data file to read')
-
-	# Parse the arguments
-	args = parser.parse_args()
-
-	# Access the two given arguments
-	return args.thetaset_filename, args.dataset_filename
-'''
 
 def main():
 	try:

@@ -4,27 +4,14 @@ import numpy as np
 from config import load_filenames, load_feature_and_parameters
 from ascii_format import *
 
-'''
-# Parse given arguments and get the thetaset filename
-def parse_args():
-	# Create the parser
-	parser = argparse.ArgumentParser(description="""This program will be
-	used to predict the price of a car for a given mileage. 
-	When you launch the program, it should prompt you for a mileage, and then
-	give you back the estimated price for that mileage. The program will use
-	the following hypothesis to predict the price:
-	estimateP rice(mileage) = θ0 + (θ1 ∗ mileage)""")
+"""
+This program will be used to predict the price of a car for a given mileage.
+When you launch the program, it should prompt you for a mileage, and then
+give you back the estimated price for that mileage.
 
-    # Add arguments. There must be two arguments for filenames
-	parser.add_argument('thetaset_filename', type=str, help='the name of the thetaset file to read')
-	parser.add_argument('dataset_filename', type=str, help='the name of the dataset file to read')
-
-	# Parse the arguments
-	args = parser.parse_args()
-
-    # Return the two filenames
-	return args.thetaset_filename, args.dataset_filename
-'''
+The program will use the following hypothesis to predict the price:
+	estimatePrice(mileage) = θ0 + θ1 ∗ mileage
+"""
 
 def estimate_price(theta0, theta1, X, mileage, norm=False, verbose=False):	
 	"""
@@ -35,7 +22,13 @@ def estimate_price(theta0, theta1, X, mileage, norm=False, verbose=False):
 	if verbose:
 		print(f"{INFO} Normalizing feature values...")
 
-	# Normalize feature values
+	"""
+	Normalization:
+	- The mean is the average of a set of numbers, representing the
+		central value of the dataset.
+	- The standard deviation measures the spread or dispersion of data
+		points from the mean.
+	"""
 	X_mean = np.mean(X)
 	X_std = np.std(X)
 	mileage_normalized = (mileage - X_mean) / X_std
