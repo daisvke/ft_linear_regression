@@ -12,6 +12,7 @@ hypothesis to predict the price :<br />
 `estimatePrice(mileage) = θ0 + (θ1 * mileage)`<br />
 
 Before the run of the training program, theta0 and theta1 will be set to 0.<br />
+<img src="screenshots/training.png" />
 
 * The second program will be used to train the model. It will read the dataset file
 and perform a linear regression on the data.<br />
@@ -20,10 +21,11 @@ Once the linear regression has completed, the variables theta0 and theta1 will b
 * We will be using the following formulas:
 <img src="screenshots/formulas.png" />
 
-* The third program will plot the data and the regression line on a graph using the matplotlib library. It will be displayed on an external window.<br />
+* The third program will plot the data and the regression line on a graph using the matplotlib library. It will be displayed on an external window. It is a great way to visualize how well the model fits the data.<br />
+<img src="screenshots/plot.png" />
 
 * The fourth program will calculate the precision of the model
-
+<img src="screenshots/precision.png" />
 
 ## Requirements
 * Some version of python
@@ -49,7 +51,7 @@ make estim
 or
 python src/price_prediction.py
 
-// Plotting the data and the regression line on a graph. It is a great way to visualize how well the model fits the data
+// Plotting the data and the regression line on a graph.
 make plot
 or
 python src/plot_regression.py
