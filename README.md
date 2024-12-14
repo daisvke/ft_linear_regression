@@ -3,8 +3,8 @@
 ## Description
 This project implements a simple linear regression with a single feature - in this case, the mileage of the car.<br />
 
-To do so, we have two programs :<br />
-### The first program will be used to predict the price of a car for a given mileage.<br />
+To do so, we have four programs :<br />
+#### The first program will be used to predict the price of a car for a given mileage.<br />
 - When you launch the program, it should prompt you for a mileage, and then give
 you back the estimated price for that mileage. The program will use the following
 hypothesis to predict the price :<br />
@@ -15,7 +15,7 @@ hypothesis to predict the price :<br />
 - screenshot:
 <img src="screenshots/training.png" />
 
-* The second program will be used to train the model. It will read the dataset file
+#### The second program will be used to train the model. It will read the dataset file
 and perform a linear regression on the data.<br />
 Once the linear regression has completed, the variables theta0 and theta1 will be saved in an external file for use in the first program.<br />
 
