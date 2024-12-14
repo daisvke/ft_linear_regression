@@ -43,4 +43,10 @@ python src/model_training.py
 make estim
 or
 python src/price_prediction.py
+
+// Plotting the data and the regression line on a graph. It is a great way to visualize how well the model fits the data.
+make plot
+or
+python src/plot_regression.py
+
 ```
