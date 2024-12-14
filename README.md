@@ -4,7 +4,7 @@
 This project implements a simple linear regression with a single feature - in this case, the mileage of the car.<br />
 
 To do so, we have two programs :<br />
-* The first program will be used to predict the price of a car for a given mileage.<br />
+### The first program will be used to predict the price of a car for a given mileage.<br />
 - When you launch the program, it should prompt you for a mileage, and then give
 you back the estimated price for that mileage. The program will use the following
 hypothesis to predict the price :<br />
