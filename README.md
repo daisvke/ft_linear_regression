@@ -11,11 +11,11 @@ Linear regression is a fundamental statistical method used to model the relation
 * Linear Relationship: The relationship is represented by a linear equation of the form:<br />
   `y=b0​+b1​x1​+b2​x2​+...+bn​xn​+ϵ`<br /><br />
     
-    Where:<br />
-        - y is the predicted value.
-        - b0​ is the y-intercept.
-        - b1​,b2​,...,bn​ are the coefficients for each independent variable.
-        - x1​,x2​,...,xn​ are the independent variables.
+    Where:
+        - y is the predicted value.<br />
+        - b0​ is the y-intercept.<br />
+        - b1​,b2​,...,bn​ are the coefficients for each independent variable.<br />
+        - x1​,x2​,...,xn​ are the independent variables.<br />
         - ϵ is the error term.
 
 ## Description
