@@ -4,12 +4,12 @@
 Linear regression is a fundamental statistical method used to model the relationship between a dependent variable and one or more independent variables. It assumes that there is a linear relationship between the input features and the output target. This technique is widely used in various fields, including economics, biology, engineering, and social sciences, for predictive modeling and data analysis.
 
 ### Key Concepts
-    * Dependent Variable (Target): The variable we are trying to predict or explain (e.g., house prices).
+* Dependent Variable (Target): The variable we are trying to predict or explain (e.g., house prices).
 
-    * Independent Variables (Features): The variables used to predict the dependent variable (e.g., square footage, number of bedrooms).
+* Independent Variables (Features): The variables used to predict the dependent variable (e.g., square footage, number of bedrooms).
 
-    * Linear Relationship: The relationship is represented by a linear equation of the form:<br />
-    `y=b0​+b1​x1​+b2​x2​+...+bn​xn​+ϵ`<br /><br />
+* Linear Relationship: The relationship is represented by a linear equation of the form:<br />
+  `y=b0​+b1​x1​+b2​x2​+...+bn​xn​+ϵ`<br /><br />
     
     Where:<br />
         - y is the predicted value.
