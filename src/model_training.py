@@ -64,10 +64,14 @@ def train_model(thetaset_filename, dataset_filename):
 		error = (prediction - y)
 
 		"""
-		Set an early stopping condition for the loop. This approach can help
-		detect when the model diverges due to an excessively large learning
-		rate or when it's no longer making progress, potentially saving
-		computation time.
+		A cost (or loss) is a metric that quantifies how well a model's
+		predictions match the actual data.
+		
+		Using that cost, we will set an early stopping condition for the loop.
+		This approach can help detect when the model diverges due to an
+		excessively large learning rate or when it's no longer making progress,
+		potentially saving computation time.
+
 		"""
 		cost = np.sum(error ** 2) / (2 * m)
         

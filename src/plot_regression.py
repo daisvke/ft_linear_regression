@@ -32,6 +32,8 @@ def plot_regression(X, y, theta0, theta1):
 
 	# Plot the regression line
 	plt.plot(X_range, y_pred, color='#F550B5', linestyle='-', linewidth=1, label='Regression line')
+	# This has the same data points but is wider and more transparent
+	# so that it creates a glowing effect on the previous plot
 	plt.plot(X_range, y_pred, color='#F550B5', linestyle='-', alpha=0.2, linewidth=5)
 	
 	print(f"{DONE} Plotted the regression line\n")
