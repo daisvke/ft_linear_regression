@@ -57,10 +57,10 @@ def train_model(thetaset_filename, dataset_filename):
 			print(f"{INFO} Prediction 2 = {prediction[1]}, Price 2 = {y[1]}, Cost = {cost}")
 		# Check for divergence or convergence
 		if cost > prev_cost: # Set a Stopping Condition
-			print(f"{INFO} Cost increased at iteration {i}. Stopping early to prevent divergence.")
+			print(f"{WARNING} Cost increased at iteration {i}. Stopping early to prevent divergence.")
 			break
 		elif abs(prev_cost - cost) < tolerance:
-			print(f"{INFO} Cost improvement below tolerance at iteration {i}. Converged.")
+			print(f"{WARNING} Cost improvement below tolerance at iteration {i}. Converged.")
 			break
 
 		prev_cost = cost

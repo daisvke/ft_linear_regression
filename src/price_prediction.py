@@ -54,7 +54,7 @@ def main():
 	else:
 		print(f"{ERROR} Missing filename(s) in the configuration file.\n",
 			file=sys.stderr)
-	print("This program will predict the price of a car from its mileage.\n")
+	print(f"{INFO} This program will predict the price of a car from its mileage.\n")
 	
 	try: # Prompt the user for mileage
 		mileage = int(input("├── Enter the mileage of the car (in km): "))
@@ -68,7 +68,7 @@ def main():
 
 	# Predict the price of the car
 	predicted_price = estimate_price(theta0, theta1, X, mileage, True)
-	print(f"\n{DONE} Predicted price: {BG_YELLOW}{RED}{predicted_price}{RESET}\n")
+	print(f"{DONE} Predicted price: {BG_YELLOW}{RED} {predicted_price} {RESET}\n")
 
 if __name__ == "__main__":
 	main()
