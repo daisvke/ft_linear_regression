@@ -59,6 +59,9 @@ train:
 estim:
 	@$(PYTHON) src/price_prediction.py
 
+plot:
+	@$(PYTHON) src/plot_regression.py
+
 # Lists all the installed packages in the current environment along with their versions in requirements.txt.
 freeze:
 	$(PIP) freeze > requirements.txt

@@ -20,6 +20,15 @@ Once the linear regression has completed, the variables theta0 and theta1 will b
 * We will be using the following formulas:
 <img src="screenshots/formulas.png" />
 
+## Requirements
+* Some version of python
+* Tkinter for python
+```
+// Install Tkinter (for Ubuntu/Linux)
+sudo apt-get update
+sudo apt-get install python3-tk
+```
+
 ## Commands
 ```
 // Set up the environment
