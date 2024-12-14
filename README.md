@@ -5,13 +5,14 @@ This project implements a simple linear regression with a single feature - in th
 
 To do so, we have two programs :<br />
 * The first program will be used to predict the price of a car for a given mileage.<br />
-When you launch the program, it should prompt you for a mileage, and then give
+- When you launch the program, it should prompt you for a mileage, and then give
 you back the estimated price for that mileage. The program will use the following
 hypothesis to predict the price :<br />
 
 `estimatePrice(mileage) = θ0 + (θ1 * mileage)`<br />
 
-Before the run of the training program, theta0 and theta1 will be set to 0.<br />
+- Before the run of the training program, theta0 and theta1 will be set to 0.<br />
+- screenshot:
 <img src="screenshots/training.png" />
 
 * The second program will be used to train the model. It will read the dataset file
