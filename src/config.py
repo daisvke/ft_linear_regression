@@ -42,8 +42,15 @@ def load_feature_and_parameters(thetaset_filename, dataset_filename):
 		print("└── Data:")
 		print(data.describe(), "\n")
 
+		# Convert columns to numeric, invalid parsing will be set to NaN
+		data['km'] = pd.to_numeric(data['km'], errors='coerce')
+		data['price'] = pd.to_numeric(data['price'], errors='coerce')
+
+		# Check if there are any NaN values
+		if data['km'].isnull().any() or data['price'].isnull().any():
+			raise ValueError("There are non-numeric values in the data")
 	except Exception as e:
 		print(f"{ERROR} An unexpected error occurred: {e}", file=sys.stderr)
 		sys.exit(1)
-
+	
 	return theta0, theta1, data['km'].values, data['price'].values
