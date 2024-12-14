@@ -39,6 +39,9 @@ def estimate_price(theta0, theta1, X, mileage, norm=False, verbose=False):
 	return theta0 + (mileage_normalized * theta1)
 
 def main():
+	print(f"{INFO} This program will predict the price of a car from its mileage.\n")
+	print(f"{INFO} Loading data...")
+
 	# Load filenames from the configuration file
 	filenames = load_filenames()
 	# Unpack the filenames into two separate variables
@@ -47,8 +50,7 @@ def main():
 	else:
 		print(f"{ERROR} Missing filename(s) in the configuration file.\n",
 			file=sys.stderr)
-	print(f"{INFO} This program will predict the price of a car from its mileage.\n")
-	
+
 	try: # Prompt the user for mileage
 		mileage = int(input("├── Enter the mileage of the car (in km): "))
 	except ValueError:

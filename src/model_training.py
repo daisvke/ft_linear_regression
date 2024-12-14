@@ -98,6 +98,9 @@ def train_model(thetaset_filename, dataset_filename):
 			save_parameters_to_file(thetaset_filename, theta0, theta1)
 
 def main():
+	print(f"{INFO} This program will train the model")
+	print(f"{INFO} Loading data...")
+
 	try:
 		# Load filenames from the configuration file
 		filenames = load_filenames()

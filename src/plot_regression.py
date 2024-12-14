@@ -68,7 +68,9 @@ def plot_regression(X, y, theta0, theta1):
 	plt.show()
 
 def main():
+	print(f"{INFO} This program will plot the data and the regression line on a graph.")
 	print(f"{INFO} Loading data...")
+
 	# Load filenames from the configuration file
 	filenames = load_filenames()
 	# Unpack the filenames into two separate variables
