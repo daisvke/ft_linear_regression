@@ -13,10 +13,12 @@ The program will use the following hypothesis to predict the price:
 	estimatePrice(mileage) = θ0 + θ1 ∗ mileage
 """
 
-def estimate_price(theta0, theta1, X, mileage, norm=False, verbose=False):	
+def estimate_price(theta0, theta1, X, mileage, verbose=False):	
 	"""
-	theta0 is the intercept (constant term).
-	theta1 is the slope (how much y changes with x).
+	'theta0' and 'theta1' are the parameters.
+	'theta0' is the intercept (constant term).
+	'theta1' is the slope (how much y changes with X).
+	'mileage' is the feature (an individual measurable property).
 	"""
 
 	if verbose:
