@@ -108,9 +108,9 @@ The IQ presented was formed from the results of numerous international studies a
     - If prices are closer together (e.g., $5,000-$6,000), this error may be too high.
 
 ### R-squared (R²)
- - R2 measures how well the model explains the variance in the data.
+ - R² measures how well the model explains the variance in the data.
  - A value of 0.733 means the model explains 73.3% of the variability in the target variable.
- - R2 ranges from 0 to 1:
+ - R² ranges from 0 to 1:
     - 1 indicates a perfect model.
     - 0 means the model does no better than simply predicting the mean of the target.
 

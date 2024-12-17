@@ -3,6 +3,7 @@ from ascii_format import ERROR
 import sys
 from typing import Tuple
 
+
 def load_filenames(filename: str = 'params/filenames.txt') -> list:
     """
     This function loads the filenames used in the project
