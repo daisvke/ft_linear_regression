@@ -86,7 +86,7 @@ python src/model_precision.py
 ## Datasets
 We have two dataset available in the 'data' folder:
 * `data_income_intel.csv`: intelligence related to income<br />
-The IQ presented was formed from the results of numerous international studies and compared the average income from 2000 to 2019.<br >/
+The IQ presented was formed from the results of numerous international studies and compared the average income from 2000 to 2019.<br >
 (Data from https://www.worlddata.info/iq-by-country.php)
 
 * `data_mileage_price.csv`: mileage of a car related to its price
