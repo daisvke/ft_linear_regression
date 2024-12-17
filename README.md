@@ -19,15 +19,14 @@ Linear regression is a fundamental statistical method used to model the relation
         - ϵ is the error term.
 
 ## Description
-This project implements a simple linear regression with a single feature - in this case, the mileage of the car.<br />
+This project implements a simple linear regression with a single feature.<br />
 
 To do so, we have <i><b>four programs</b></i> :<br />
-### The first program will be used to predict the price of a car for a given mileage.<br />
-* When you launch the program, it should prompt you for a mileage, and then give
-you back the estimated price for that mileage. The program will use the following
-hypothesis to predict the price :<br />
+### The first program will be used to predict the target value for a given feature value.<br />
+* When you launch the program, it should prompt you for an X value (eg. the mileage of a car), and then give you back the estimated y value (eg. the price of the car) for that X value. The program will use the following
+hypothesis to predict the y value :<br />
 
-`estimatePrice(mileage) = θ0 + (θ1 * mileage)`<br />
+`estimateY(X) = θ0 + (θ1 * X)`<br />
 
 * Before the run of the training program, theta0 and theta1 will be set to 0.<br />
 - screenshot:
@@ -70,7 +69,7 @@ python src/model_training.py
 // Make a prediction
 make estim
 or
-python src/price_prediction.py
+python src/estimate.py
 
 // Plotting the data and the regression line on a graph.
 make plot
@@ -83,6 +82,14 @@ or
 python src/model_precision.py
 
 ```
+
+## Datasets
+We have two dataset available in the 'data' folder:
+* `data_income_intel.csv`: intelligence related to income<br />
+The IQ presented was formed from the results of numerous international studies and compared the average income from 2000 to 2019.<br >/
+(Data from https://www.worlddata.info/iq-by-country.php)
+
+* `data_mileage_price.csv`: mileage of a car related to its price
 
 ## Model precision
 * Mean Squared Error (MSE)

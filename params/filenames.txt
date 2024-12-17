@@ -1,2 +1,2 @@
 params/thetas.txt
-data/data.csv
+data/data_mileage_price.csv
