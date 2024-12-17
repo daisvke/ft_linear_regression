@@ -92,12 +92,12 @@ The IQ presented was formed from the results of numerous international studies a
 * `data_mileage_price.csv`: mileage of a car related to its price
 
 ## Model precision
-* Mean Squared Error (MSE)
+### Mean Squared Error (MSE)
  - MSE is the average of the squared differences between predicted and actual values.
  - Lower MSE indicates better model performance.
  - The unit of MSE is the square of the target variable (e.g., square of price).
 
-* Root Mean Squared Error (RMSE)
+### Root Mean Squared Error (RMSE)
  - RMSE is the square root of MSE, making it easier to interpret because
   it has the same unit as the target variable (e.g., price in dollars).
  - An RMSE of 667.57 means that, on average, the model's predictions
@@ -107,7 +107,7 @@ The IQ presented was formed from the results of numerous international studies a
     - If car prices in the dataset range between $3,000 and $8,000, an error of $667 is ~10% of the range, which might be acceptable.
     - If prices are closer together (e.g., $5,000-$6,000), this error may be too high.
 
-* R-squared (R²)
+### R-squared (R²)
  - R2 measures how well the model explains the variance in the data.
  - A value of 0.733 means the model explains 73.3% of the variability in the target variable.
  - R2 ranges from 0 to 1:
