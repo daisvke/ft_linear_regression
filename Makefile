@@ -59,7 +59,7 @@ train:
 	@$(PYTHON) src/model_training.py
 
 estim:
-	@$(PYTHON) src/price_prediction.py
+	@$(PYTHON) src/estimate.py
 
 plot:
 	@$(PYTHON) src/plot_regression.py
