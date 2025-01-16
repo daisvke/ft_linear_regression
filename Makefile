@@ -56,16 +56,16 @@ setup: $(VENV_DIR) install
 	@echo "$(DONE) Setup complete. Virtual environment is ready to use."
 
 train:
-	@$(PYTHON) src/model_training.py
+	@$(PYTHON) model_training.py
 
-estim:
-	@$(PYTHON) src/estimate.py
+estimate:
+	@$(PYTHON) estimate.py
 
 plot:
-	@$(PYTHON) src/plot_regression.py
+	@$(PYTHON) plot_regression.py
 
-precis:
-	@$(PYTHON) src/model_precision.py
+precision:
+	@$(PYTHON) model_precision.py
 
 # Lists all the installed packages in the current environment along with their versions in requirements.txt.
 freeze:

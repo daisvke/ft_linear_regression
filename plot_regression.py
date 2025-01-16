@@ -1,8 +1,8 @@
 import matplotlib
 import matplotlib.pyplot as plt
 import numpy as np
-from config import load_filenames, load_data
-from ascii_format import INFO, DONE
+from src.config import load_filenames, load_data
+from src.ascii_format import INFO, DONE
 from estimate import estimate
 from sys import stderr
 

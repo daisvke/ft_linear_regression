@@ -1,8 +1,8 @@
 import sys
 import numpy as np
 from estimate import estimate
-from config import load_filenames, load_data
-from ascii_format import ERROR, INFO, WARNING, DONE
+from src.config import load_filenames, load_data
+from src.ascii_format import ERROR, INFO, WARNING, DONE
 
 """
 This program will be used to train the model.

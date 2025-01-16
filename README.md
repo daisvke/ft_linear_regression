@@ -64,22 +64,24 @@ make
 // Launch the training
 make re
 or
-python src/model_training.py
+make train
+or
+python model_training.py
 
 // Make a prediction
-make estim
+make estimate
 or
-python src/estimate.py
+python estimate.py
 
 // Plotting the data and the regression line on a graph.
 make plot
 or
-python src/plot_regression.py
+python plot_regression.py
 
 // Calculate the precision of the model
-make precis
+make precision
 or
-python src/model_precision.py
+python model_precision.py
 
 ```
 

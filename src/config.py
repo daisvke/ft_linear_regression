@@ -1,5 +1,5 @@
 import pandas as pd
-from ascii_format import ERROR
+from src.ascii_format import ERROR
 import sys
 from typing import Tuple
 

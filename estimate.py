@@ -1,7 +1,9 @@
+#!/usr/bin/env python3
+
 import sys
 import numpy as np
-from config import load_filenames, load_data
-from ascii_format import INFO, ERROR, DONE, BG_YELLOW, RED, RESET
+from src.config import load_filenames, load_data
+from src.ascii_format import INFO, ERROR, DONE, BG_YELLOW, RED, RESET
 from typing import Any
 
 """

@@ -1,8 +1,8 @@
 import numpy as np
 from sklearn.metrics import mean_squared_error, r2_score
 from estimate import estimate
-from config import load_filenames, load_data
-from ascii_format import INFO, ERROR, DONE, BG_YELLOW, RED, RESET
+from src.config import load_filenames, load_data
+from src.ascii_format import INFO, ERROR, DONE, BG_YELLOW, RED, RESET
 from typing import Any
 from sys import stderr
 
