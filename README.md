@@ -46,7 +46,8 @@ The third program will plot the data and the regression line on a graph using th
 * screenshot:
 <img src="screenshots/plot.png" />
 
-### The fourth program will calculate the precision of the model
+### ***4. model_precision.py***
+The fourth program will calculate the precision of the model
 * screenshot:
 <img src="screenshots/precision.png" />
 
